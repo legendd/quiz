@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 char smallest_char(char str[], char c);
 
-int main()
+int main(int argc, int *argv[])
 {
-    char str[30];
+    char str[26];
     char c,output;
     clock_t start, end;
     double time;
+    FILE *file = fopen("recursive.txt", "a");
 
-    printf("Input a sorted char array:\n");
-    scanf("%[^\n]%*c", str);
-    printf("Input a char:\n");
-    scanf("%c", &c);
+    strcpy(str, argv[1]);
+    printf("Input sorted char array: %s\n", str);
+    c = *argv[argc-1];    
+    printf("Input char: %c\n", c);
 
     start = clock();
     output = smallest_char(str, c);
@@ -20,7 +22,10 @@ int main()
     time = (end - start)/(double)(CLOCKS_PER_SEC);
 
     printf("Output: %c\n", output);
-    printf("Exe. time = %lf sec\n", time);
+    if(file){
+        fprintf(file,"Exe. time = %lf sec\n", time);
+        fclose(file);
+    }
     return 0;
 }
 
